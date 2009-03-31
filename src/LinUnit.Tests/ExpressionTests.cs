@@ -166,7 +166,19 @@ namespace LinUnit.Tests
         [Test]
         public void ShouldReturnsBoolean()
         {
-            new[] {1, 2, 3}.All(x => x.Should(y => y > 0));
+            new[] {1, 2, 3}.All(x => x.Should(y => y > 1));
+        }
+
+        [Test]
+        public void ButCanBetWrittenLikeThisAsWell()
+        {
+            new[] {1, 2, 3}.Should(x => x.All(y => y > 0));
+        }
+
+        [Test, ExpectedException(ExpectedMessage = "\"x.All(y => (y > 1))\"\r\n  But was:  < 1, 2, 3 >", MatchType = MessageMatch.Contains)]
+        public void AndFailsConsistently()
+        {
+            new[] {1, 2, 3}.Should(x => x.All(y => y > 1));
         }
 
         [Test]
