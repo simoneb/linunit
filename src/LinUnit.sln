@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinUnit", "LinUnit\LinUnit.csproj", "{A35A1C80-0B2E-4AFA-9DB9-E6094E51B844}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinUnit.Tests", "LinUnit.Tests\LinUnit.Tests.csproj", "{ABFFC198-EC89-4461-902C-4D386F098F8A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A35A1C80-0B2E-4AFA-9DB9-E6094E51B844}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A35A1C80-0B2E-4AFA-9DB9-E6094E51B844}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A35A1C80-0B2E-4AFA-9DB9-E6094E51B844}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A35A1C80-0B2E-4AFA-9DB9-E6094E51B844}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ABFFC198-EC89-4461-902C-4D386F098F8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABFFC198-EC89-4461-902C-4D386F098F8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABFFC198-EC89-4461-902C-4D386F098F8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABFFC198-EC89-4461-902C-4D386F098F8A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
