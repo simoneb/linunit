@@ -43,6 +43,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\Readme.cs">
+      <Link>Readme.cs</Link>
+    </Compile>
     <Compile Include="ExpressionTests.cs" />
   </ItemGroup>
   <ItemGroup>
