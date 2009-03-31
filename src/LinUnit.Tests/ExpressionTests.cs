@@ -166,7 +166,7 @@ namespace LinUnit.Tests
         [Test]
         public void ShouldReturnsBoolean()
         {
-            new[] {1, 2, 3}.All(x => x.Should(y => y > 1));
+            new[] {1, 2, 3}.All(x => x.Should(y => y > 0));
         }
 
         [Test]
