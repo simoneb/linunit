@@ -43,20 +43,23 @@ namespace LinUnit.Tests
         {
             var i = 0;
 
+            Action action_which_throws = () => { var a = 1/i; };
+            Func<int> safe_action = () => 1;
+
             /* Check that some code throws an exception */
-            lambda.For(() => 1/i).ShouldThrow();
+            action_which_throws.ShouldThrow();
 
             /* A specific exception type */
-            lambda.For(() => 1/i).ShouldThrow<DivideByZeroException>();
+            action_which_throws.ShouldThrow<DivideByZeroException>();
 
             /* Applying arbitrary constraints to the exception thrown */
-            lambda.For(() => 1/i).ShouldThrow().Message.Should(x => x.Contains("zero"));
+            action_which_throws.ShouldThrow().Message.Should(x => x.Contains("zero"));
 
             /* A specific exception type and arbitrary constraints */
-            lambda.For(() => 1/i).ShouldThrow<DivideByZeroException>().InnerException.Should(x => x == null);
+            action_which_throws.ShouldThrow<DivideByZeroException>().InnerException.Should(x => x == null);
 
             /* This should not throw */
-            lambda.For(() => 1).ShouldNotThrow();
+            safe_action.ShouldNotThrow();
         }
     }
 

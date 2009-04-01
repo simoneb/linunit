@@ -6,9 +6,16 @@ namespace LinUnit
 {
     public static class ShouldExtension
     {
+        public delegate object mydel();
+
         public static bool Should<T>(this T actual, Expression<Func<T, bool>> assertion)
         {
             return new ExpressionVisitor<T>(actual).Visit(assertion);
+        }
+
+        public static Exception ShouldThrow<T>(this Func<T> func)
+        {
+            return new Action(() => func()).ShouldThrow();    
         }
 
         public static Exception ShouldThrow(this Action action)
@@ -41,6 +48,11 @@ namespace LinUnit
             }
 
             throw new AssertionException(string.Format("Expected exception of type {0} but no exception was thrown", typeof(T)));
+        }
+
+        public static void ShouldNotThrow<T>(this Func<T> func)
+        {
+            new Action(() => func()).ShouldNotThrow();    
         }
 
         public static void ShouldNotThrow(this Action action)

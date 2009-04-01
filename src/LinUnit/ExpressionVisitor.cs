@@ -44,7 +44,7 @@ namespace LinUnit
                 case ExpressionType.Not:
                     Visit(expression as UnaryExpression);
                     break;
-                default: throw new Exception(string.Format("Expression of type \"{0}\" not handled", expression.NodeType));
+                default: throw new ExpressionNotHandledException<Expression>(expression.NodeType);
             }
         }
 
@@ -55,7 +55,7 @@ namespace LinUnit
                 case ExpressionType.Not:
                     builder.Append(new NotOperator());
                     break;
-                default: throw new Exception(string.Format("UnaryExpression of type \"{0}\" not handled", expression.NodeType));
+                default: throw new ExpressionNotHandledException<UnaryExpression>(expression.NodeType);
             }
 
             Visit(expression.Operand);
@@ -99,7 +99,7 @@ namespace LinUnit
                     VisitAndExpression();
                     Visit(expression.Right);
                     break;
-                default: throw new Exception(string.Format("BinaryExpression of type \"{0}\" not handled", expression.NodeType));
+                default: throw new ExpressionNotHandledException<BinaryExpression>(expression.NodeType);
             }
         }
 
@@ -128,7 +128,7 @@ namespace LinUnit
                                                               actualParameter).Compile().Invoke(actualValue);
                 case ExpressionType.Parameter:
                     return actualValue;
-                default: throw new Exception(string.Format("Expression of type \"{0}\" not handled", expression.NodeType));
+                default: throw new ExpressionNotHandledException<Expression>(expression.NodeType);
             }
         }
 
@@ -146,5 +146,12 @@ namespace LinUnit
         {
             builder.Append(new NotOperator());
         }
+    }
+
+    internal class ExpressionNotHandledException<TExpression> : Exception
+    {
+        public ExpressionNotHandledException(ExpressionType nodeType) : 
+            base(string.Format("{0} of type \"{1}\" not handled", typeof (TExpression).Name, nodeType))
+        {}
     }
 }

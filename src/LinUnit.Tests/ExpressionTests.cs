@@ -3,7 +3,6 @@ using System.Linq;
 
 namespace LinUnit.Tests
 {
-    [TestFixture]
     public class ExpressionTests
     {
         [Test]

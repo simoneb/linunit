@@ -6,141 +6,151 @@ using NUnit.Framework;
 
 namespace LinUnit.Tests
 {
-    [TestFixture]
     public class ThrowsTests
     {
-        [Test]
-        public void ActionThrows()
+        private readonly Action action_which_throws;
+        private readonly Action action_which_does_not_throw;
+        private readonly Func<int> func_which_throws;
+        private readonly Func<int> func_which_does_not_throw;
+        private readonly Action action_throwing_invalid_operation_exception;
+        private readonly Func<int> func_throwing_invalid_operation_exception;
+
+        public ThrowsTests()
         {
-            var e = new Exception();
-            lambda.For(() => { throw e; }).ShouldThrow();
+            action_which_throws = () => { throw new Exception("Exception"); };
+            action_which_does_not_throw = () => { var i = 1; };
+            action_throwing_invalid_operation_exception = () => { throw new InvalidOperationException("Exception"); };
+            func_which_throws = () => { throw new Exception("Exception"); return 1; };
+            func_which_does_not_throw = () => 1;
+            func_throwing_invalid_operation_exception = () => { throw new InvalidOperationException("Exception"); return 1; };
         }
 
         [Test]
+        public void ActionThrows()
+        {
+            action_which_throws.ShouldThrow();
+        }
+
+        [Test, ExpectedException(typeof(AssertionException))]
         public void ActionThrowsFails()
         {
-            lambda.For(() => lambda.For(() => { var i = 1; }).ShouldThrow()).ShouldThrow<AssertionException>();
+            action_which_does_not_throw.ShouldThrow();
         }
 
         [Test]
         public void FuncThrows()
         {
-            var y = 0;
-            lambda.For(() => 1 / y).ShouldThrow();
+            func_which_throws.ShouldThrow();
         }
 
-        [Test]
+        [Test, ExpectedException(typeof(AssertionException))]
         public void FuncThrowsFails()
         {
-            lambda.For(() => lambda.For(() => 1).ShouldThrow()).ShouldThrow<AssertionException>();
+            func_which_does_not_throw.ShouldThrow();
         }
 
         [Test]
         public void ActionThrowsSpecificException()
         {
-            var e = new InvalidOperationException();
-            lambda.For(() => { throw e; }).ShouldThrow<InvalidOperationException>();
+            action_throwing_invalid_operation_exception.ShouldThrow<InvalidOperationException>();
         }
 
-        [Test]
+        [Test, ExpectedException(typeof(AssertionException))]
         public void ActionThrowsSpecificExceptionFails()
         {
-            var e = new InvalidOperationException();
-            lambda.For(() => lambda.For(() => { throw e; }).ShouldThrow<OutOfMemoryException>()).ShouldThrow<AssertionException>();
+            action_throwing_invalid_operation_exception.ShouldThrow<OutOfMemoryException>();
         }
 
         [Test]
         public void FuncThrowsSpecificException()
         {
-            var e = new InvalidOperationException();
-            lambda.For(() => { throw e; return 1; }).ShouldThrow<InvalidOperationException>();
+            lambda(func_throwing_invalid_operation_exception).ShouldThrow<InvalidOperationException>();
         }
 
-        [Test]
+        [Test, ExpectedException(typeof(AssertionException))]
         public void FuncThrowsSpecificExceptionFails()
         {
-            lambda.For(() => lambda.For(() => 1).ShouldThrow<InvalidOperationException>()).ShouldThrow<AssertionException>();
+            lambda(func_throwing_invalid_operation_exception).ShouldThrow<OutOfMemoryException>();
         }
 
         [Test]
         public void ActionThrowsAndAppliesConstraintToException()
         {
-            var e = new Exception("Exception");
-            lambda.For(() => { throw e; }).ShouldThrow().Message.Should(x => x == "Exception");
+            action_which_throws.ShouldThrow().Message.Should(x => x == "Exception");
         }
 
-        [Test]
+        [Test, ExpectedException(typeof(AssertionException))]
         public void ActionThrowsAndAppliesConstraintToExceptionFails()
         {
-            var e = new Exception("Exception");
-            lambda.For(() => lambda.For(() => { throw e; }).ShouldThrow().Message.Should(x => x == "wrong message")).ShouldThrow<AssertionException>();
+            action_which_throws.ShouldThrow().Message.Should(x => x == "wrong message");
         }
 
         [Test]
         public void FuncThrowsAndAppliesConstraintToException()
         {
-            var e = new Exception("Exception");
-            lambda.For(() => { throw e; return 1; }).ShouldThrow().Message.Should(x => x == "Exception");
+            func_which_throws.ShouldThrow().Message.Should(x => x == "Exception");
         }
 
-        [Test]
+        [Test, ExpectedException(typeof(AssertionException))]
         public void FuncThrowsAndAppliesConstraintToExceptionFails()
         {
-            var e = new Exception("Exception");
-            lambda.For(() => lambda.For(() => { throw e; return 1; }).ShouldThrow().Message.Should(x => x == "wrong message")).ShouldThrow<AssertionException>();
+            func_which_throws.ShouldThrow().Message.Should(x => x == "wrong message");
         }
 
         [Test]
         public void ActionThrowsSpecificExceptionAndAppliesConstraintToException()
         {
-            var e = new InvalidOperationException("Exception");
-            lambda.For(() => { throw e; }).ShouldThrow<InvalidOperationException>().Message.Should(x => x == "Exception");
+            action_throwing_invalid_operation_exception.ShouldThrow<InvalidOperationException>().Message.Should(x => x == "Exception");
         }
 
-        [Test]
+        [Test, ExpectedException(typeof(AssertionException))]
         public void ActionThrowsSpecificExceptionAndAppliesConstraintToExceptionFails()
         {
-            var e = new Exception("Exception");
-            lambda.For(() => lambda.For(() => { throw e; }).ShouldThrow<Exception>().Message.Should(x => x == "wrong message")).ShouldThrow<AssertionException>();
+            action_throwing_invalid_operation_exception.ShouldThrow<InvalidOperationException>()
+                .Message.Should(x => x == "wrong message");
         }
 
         [Test]
         public void FuncThrowsSpecificExceptionAndAppliesConstraintToException()
         {
-            var e = new Exception("Exception");
-            lambda.For(() => { throw e; return 1; }).ShouldThrow<Exception>().Message.Should(x => x == "Exception");
+            lambda(func_throwing_invalid_operation_exception).ShouldThrow<InvalidOperationException>()
+                .Message.Should(x => x == "Exception");
         }
 
-        [Test]
+        [Test, ExpectedException(typeof(AssertionException))]
         public void FuncThrowsSpecificExceptionAndAppliesConstraintToExceptionFails()
         {
-            var e = new Exception("Exception");
-            lambda.For(() => lambda.For(() => { throw e; return 1; }).ShouldThrow<Exception>().Message.Should(x => x == "wrong message")).ShouldThrow<AssertionException>();
+            lambda(func_throwing_invalid_operation_exception).ShouldThrow<InvalidOperationException>()
+                .Message.Should(x => x == "wrong message");
         }
 
         [Test]
         public void ActionShouldNotThrow()
         {
-            lambda.For(() => { var i = 1; }).ShouldNotThrow();
+            action_which_does_not_throw.ShouldNotThrow();
         }
 
-        [Test]
+        [Test, ExpectedException(typeof(AssertionException))]
         public void ActionShouldNotThrowFails()
         {
-            lambda.For(() => lambda.For(() => { var i = 1; throw new Exception(); }).ShouldNotThrow()).ShouldThrow<AssertionException>();
+            action_which_throws.ShouldNotThrow();
         }
 
         [Test]
         public void FuncShouldNotThrow()
         {
-            lambda.For(() => 1).ShouldNotThrow();
+            func_which_does_not_throw.ShouldNotThrow();
         }
 
-        [Test]
+        [Test, ExpectedException(typeof(AssertionException))]
         public void FuncShouldNotThrowFails()
         {
-            var i = 0;
-            lambda.For(() => lambda.For(() => 1/i).ShouldNotThrow()).ShouldThrow<AssertionException>();
+            func_which_throws.ShouldNotThrow();
+        }
+
+        private static Action lambda<T>(Func<T> func)
+        {
+            return () => func();
         }
     }
 }
