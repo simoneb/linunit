@@ -43,6 +43,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\Readme.cs">
+      <Link>Readme.cs</Link>
+    </Compile>
     <Compile Include="ExpressionTests.cs" />
     <Compile Include="ThrowsTests.cs" />
   </ItemGroup>
@@ -51,11 +54,6 @@
       <Project>{A35A1C80-0B2E-4AFA-9DB9-E6094E51B844}</Project>
       <Name>LinUnit</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="..\..\Readme.rdoc">
-      <Link>Readme.rdoc</Link>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
