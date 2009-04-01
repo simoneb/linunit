@@ -47,11 +47,12 @@
       <Link>Readme.cs</Link>
     </Compile>
     <Compile Include="ExpressionTests.cs" />
+    <Compile Include="ThrowsTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LinUnit\LinUnit.csproj">
       <Project>{A35A1C80-0B2E-4AFA-9DB9-E6094E51B844}</Project>
-      <Name>NUnitSyntax</Name>
+      <Name>LinUnit</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

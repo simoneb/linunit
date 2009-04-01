@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
@@ -35,6 +36,27 @@ namespace LinUnit.Tests
             ints.Should(x => x.Contains(2) && !x.Contains(4));
 
             "".Should(x => x.Empty());
+        }
+
+        [Test]
+        public void Exceptions()
+        {
+            var i = 0;
+
+            /* Check that some code throws an exception */
+            lambda.For(() => 1/i).ShouldThrow();
+
+            /* A specific exception type */
+            lambda.For(() => 1/i).ShouldThrow<DivideByZeroException>();
+
+            /* Applying arbitrary constraints to the exception thrown */
+            lambda.For(() => 1/i).ShouldThrow().Message.Should(x => x.Contains("zero"));
+
+            /* A specific exception type and arbitrary constraints */
+            lambda.For(() => 1/i).ShouldThrow<DivideByZeroException>().InnerException.Should(x => x == null);
+
+            /* This should not throw */
+            lambda.For(() => 1).ShouldNotThrow();
         }
     }
 

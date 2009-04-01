@@ -306,5 +306,6 @@ namespace LinUnit.Tests
             var y = 3;
             new[]{1, 2}.Should(x => x.Contains(y));
         }
+
     }
 }
