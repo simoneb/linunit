@@ -147,11 +147,4 @@ namespace LinUnit
             builder.Append(new NotOperator());
         }
     }
-
-    internal class ExpressionNotHandledException<TExpression> : Exception
-    {
-        public ExpressionNotHandledException(ExpressionType nodeType) : 
-            base(string.Format("{0} of type \"{1}\" not handled", typeof (TExpression).Name, nodeType))
-        {}
-    }
 }

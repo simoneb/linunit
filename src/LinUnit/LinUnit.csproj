@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BooleanMethodCallExpressionConstraint.cs" />
+    <Compile Include="ExpressionNotHandledException.cs" />
     <Compile Include="ShouldExtension.cs" />
     <Compile Include="ExpressionVisitor.cs" />
   </ItemGroup>
