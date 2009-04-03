@@ -26,124 +26,124 @@ namespace LinUnit.Tests
         }
 
         [Test]
-        public void ActionThrows()
+        public void Action_throws()
         {
             action_which_throws.ShouldThrow();
         }
 
         [Test, ExpectedException(typeof(AssertionException))]
-        public void ActionThrowsFails()
+        public void Action_throws_fails()
         {
             action_which_does_not_throw.ShouldThrow();
         }
 
         [Test]
-        public void FuncThrows()
+        public void Func_throws()
         {
             func_which_throws.ShouldThrow();
         }
 
         [Test, ExpectedException(typeof(AssertionException))]
-        public void FuncThrowsFails()
+        public void Func_throws_fails()
         {
             func_which_does_not_throw.ShouldThrow();
         }
 
         [Test]
-        public void ActionThrowsSpecificException()
+        public void Action_throws_specific_exception()
         {
             action_throwing_invalid_operation_exception.ShouldThrow<InvalidOperationException>();
         }
 
         [Test, ExpectedException(typeof(AssertionException))]
-        public void ActionThrowsSpecificExceptionFails()
+        public void Action_throws_specific_exception_fails()
         {
             action_throwing_invalid_operation_exception.ShouldThrow<OutOfMemoryException>();
         }
 
         [Test]
-        public void FuncThrowsSpecificException()
+        public void Func_throws_specific_exception()
         {
             lambda(func_throwing_invalid_operation_exception).ShouldThrow<InvalidOperationException>();
         }
 
         [Test, ExpectedException(typeof(AssertionException))]
-        public void FuncThrowsSpecificExceptionFails()
+        public void Func_throws_specific_exception_fails()
         {
             lambda(func_throwing_invalid_operation_exception).ShouldThrow<OutOfMemoryException>();
         }
 
         [Test]
-        public void ActionThrowsAndAppliesConstraintToException()
+        public void Action_throws_and_applies_constraint_to_exception()
         {
             action_which_throws.ShouldThrow().Message.Should(x => x == "Exception");
         }
 
         [Test, ExpectedException(typeof(AssertionException))]
-        public void ActionThrowsAndAppliesConstraintToExceptionFails()
+        public void Action_throws_and_applies_constraint_to_exception_fails()
         {
             action_which_throws.ShouldThrow().Message.Should(x => x == "wrong message");
         }
 
         [Test]
-        public void FuncThrowsAndAppliesConstraintToException()
+        public void Func_throws_and_applies_constraint_to_exception()
         {
             func_which_throws.ShouldThrow().Message.Should(x => x == "Exception");
         }
 
         [Test, ExpectedException(typeof(AssertionException))]
-        public void FuncThrowsAndAppliesConstraintToExceptionFails()
+        public void Func_throws_and_applies_constraint_to_exception_fails()
         {
             func_which_throws.ShouldThrow().Message.Should(x => x == "wrong message");
         }
 
         [Test]
-        public void ActionThrowsSpecificExceptionAndAppliesConstraintToException()
+        public void Action_throws_specific_exception_and_applies_constraint_to_exception()
         {
             action_throwing_invalid_operation_exception.ShouldThrow<InvalidOperationException>().Message.Should(x => x == "Exception");
         }
 
         [Test, ExpectedException(typeof(AssertionException))]
-        public void ActionThrowsSpecificExceptionAndAppliesConstraintToExceptionFails()
+        public void Action_throws_specific_exception_and_applies_constraint_to_exception_fails()
         {
             action_throwing_invalid_operation_exception.ShouldThrow<InvalidOperationException>()
                 .Message.Should(x => x == "wrong message");
         }
 
         [Test]
-        public void FuncThrowsSpecificExceptionAndAppliesConstraintToException()
+        public void Func_throws_specific_exception_and_applies_constraint_to_exception()
         {
             lambda(func_throwing_invalid_operation_exception).ShouldThrow<InvalidOperationException>()
                 .Message.Should(x => x == "Exception");
         }
 
         [Test, ExpectedException(typeof(AssertionException))]
-        public void FuncThrowsSpecificExceptionAndAppliesConstraintToExceptionFails()
+        public void Func_throws_specific_exception_and_applies_constraint_to_exception_fails()
         {
             lambda(func_throwing_invalid_operation_exception).ShouldThrow<InvalidOperationException>()
                 .Message.Should(x => x == "wrong message");
         }
 
         [Test]
-        public void ActionShouldNotThrow()
+        public void Action_should_not_throw()
         {
             action_which_does_not_throw.ShouldNotThrow();
         }
 
         [Test, ExpectedException(typeof(AssertionException))]
-        public void ActionShouldNotThrowFails()
+        public void Action_should_not_throw_fails()
         {
             action_which_throws.ShouldNotThrow();
         }
 
         [Test]
-        public void FuncShouldNotThrow()
+        public void Func_should_not_throw()
         {
             func_which_does_not_throw.ShouldNotThrow();
         }
 
         [Test, ExpectedException(typeof(AssertionException))]
-        public void FuncShouldNotThrowFails()
+        public void Func_should_not_throw_fails()
         {
             func_which_throws.ShouldNotThrow();
         }

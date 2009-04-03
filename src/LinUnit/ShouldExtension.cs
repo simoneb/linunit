@@ -8,9 +8,9 @@ namespace LinUnit
     {
         public delegate object mydel();
 
-        public static bool Should<T>(this T actual, Expression<Func<T, bool>> assertion)
+        public static void Should<T>(this T actual, Expression<Func<T, bool>> assertion)
         {
-            return new ExpressionVisitor<T>(actual).Visit(assertion);
+            new ExpressionVisitor<T>(actual).Visit(assertion);
         }
 
         public static Exception ShouldThrow<T>(this Func<T> func)

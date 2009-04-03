@@ -12,19 +12,19 @@ namespace LinUnit.Tests
         }
 
         [Test, ExpectedException(ExpectedMessage = "2\r\n  But was:  1", MatchType = MessageMatch.Contains)]
-        public void EqualFails()
+        public void Equal_fails()
         {
             1.Should(x => x == 2);
         }
 
         [Test]
-        public void NotEqual()
+        public void Not_equal()
         {
             1.Should(x => x != 2);
         }
 
         [Test, ExpectedException(ExpectedMessage = "not 1\r\n  But was:  1", MatchType = MessageMatch.Contains)]
-        public void NotEqualFails()
+        public void Not_equal_fails()
         {
             1.Should(x => x != 1);
         }
@@ -37,7 +37,7 @@ namespace LinUnit.Tests
 
 
         [Test, ExpectedException(ExpectedMessage = "1 and 2\r\n  But was:  1", MatchType = MessageMatch.Contains)]
-        public void AndFails()
+        public void And_fails()
         {
             1.Should(x => x == 1 && x == 2);
         }
@@ -49,7 +49,7 @@ namespace LinUnit.Tests
         }
 
         [Test, ExpectedException(ExpectedMessage = "2 or 3\r\n  But was:  1", MatchType = MessageMatch.Contains)]
-        public void OrFails()
+        public void Or_fails()
         {
             1.Should(x => x == 2 || x == 3);
         }
@@ -61,19 +61,19 @@ namespace LinUnit.Tests
         }
 
         [Test, ExpectedException(ExpectedMessage = "greater than 2\r\n  But was:  1", MatchType = MessageMatch.Contains)]
-        public void GreaterFails()
+        public void Greater_fails()
         {
             1.Should(x => x > 2);
         }
 
         [Test]
-        public void GreaterOrEqual()
+        public void Greater_or_equal()
         {
             1.Should(x => x >= 1);
         }
 
         [Test, ExpectedException(ExpectedMessage = "greater than or equal to 2\r\n  But was:  1", MatchType = MessageMatch.Contains)]
-        public void GreaterOrEqualFails()
+        public void Greater_or_equal_fails()
         {
             1.Should(x => x >= 2);
         }
@@ -85,25 +85,37 @@ namespace LinUnit.Tests
         }
 
         [Test, ExpectedException(ExpectedMessage = "less than 1\r\n  But was:  1", MatchType = MessageMatch.Contains)]
-        public void LessFails()
+        public void Less_fails()
         {
             1.Should(x => x < 1);
         }
 
         [Test]
-        public void LessOrEqual()
+        public void Less_or_equal()
         {
             1.Should(x => x <= 1);
         }
 
         [Test, ExpectedException(ExpectedMessage = "less than or equal to 0\r\n  But was:  1", MatchType = MessageMatch.Contains)]
-        public void LessOrEqualFails()
+        public void Less_or_equal_fails()
         {
             1.Should(x => x <= 0);
         }
 
         [Test]
-        public void OperationsOnRightSide()
+        public void Not()
+        {
+            "abc".Should(x => !x.Contains("d"));
+        }
+
+        [Test, ExpectedException(ExpectedMessage = "not \"x.Contains(\"a\")\"\r\n  But was:  \"abc\"", MatchType = MessageMatch.Contains)]
+        public void Notfails()
+        {
+            "abc".Should(x => !x.Contains("a"));
+        }
+
+        [Test]
+        public void Operations_on_right_side()
         {
             var y = 2;
             var z = 4;
@@ -115,147 +127,129 @@ namespace LinUnit.Tests
         }
 
         [Test]
-        public void StaticMethodWithoutArgumentsOnParameter()
+        public void Static_method_called_on_parameter_with_no_arguments()
         {
             "a".Should(x => x.Any());
         }
 
         [Test, ExpectedException(ExpectedMessage = "\"x.Any()\"\r\n  But was:  <string.Empty>", MatchType = MessageMatch.Contains)]
-        public void StaticMethodWithoutArgumentsOnParameterFailing()
+        public void Static_method_called_on_parameter_with_no_arguments_fails()
         {
             "".Should(x => x.Any());
         }
 
         [Test]
-        public void StaticMethodOnParameter()
+        public void Static_method_called_on_parameter_with_simple_arguments()
         {
             new[] {1, 2}.Should(x => x.Contains(1));
         }
 
         [Test, ExpectedException(ExpectedMessage = "\"x.Contains(3)\"\r\n  But was:  < 1, 2 >", MatchType = MessageMatch.Contains)]
-        public void StaticMethodOnParameterFailing()
+        public void Static_method_called_on_parameter_with_simple_arguments_fails()
         {
             new[] {1, 2}.Should(x => x.Contains(3));
         }
 
         [Test]
-        public void InstanceMethodOnParameter()
-        {
-            "abc".Should(x => x.Contains("a"));
-        }
-
-        [Test, ExpectedException(ExpectedMessage = "\"x.Contains(\"d\")\"\r\n  But was:  \"abc\"", MatchType = MessageMatch.Contains)]
-        public void InstanceMethodOnParameterFailing()
-        {
-            "abc".Should(x => x.Contains("d"));
-        }
-
-        [Test]
-        public void Not()
-        {
-            "abc".Should(x => !x.Contains("d"));            
-        }
-
-        [Test, ExpectedException(ExpectedMessage = "not \"x.Contains(\"a\")\"\r\n  But was:  \"abc\"", MatchType = MessageMatch.Contains)]
-        public void NotFailing()
-        {
-            "abc".Should(x => !x.Contains("a"));
-        }
-
-        [Test]
-        public void ShouldReturnsBoolean()
-        {
-            new[] {1, 2, 3}.All(x => x.Should(y => y > 0));
-        }
-
-        [Test]
-        public void ButCanBetWrittenLikeThisAsWell()
+        public void Static_method_called_on_parameter_with_lambda_argument()
         {
             new[] {1, 2, 3}.Should(x => x.All(y => y > 0));
         }
 
         [Test, ExpectedException(ExpectedMessage = "\"x.All(y => (y > 1))\"\r\n  But was:  < 1, 2, 3 >", MatchType = MessageMatch.Contains)]
-        public void AndFailsConsistently()
+        public void Static_method_called_on_parameter_with_lambda_argument_fails()
         {
             new[] {1, 2, 3}.Should(x => x.All(y => y > 1));
         }
 
         [Test]
-        public void StaticMethodOnLiteral()
+        public void Instance_method_called_on_parameter_with_simple_arguments()
+        {
+            "abc".Should(x => x.Contains("a"));
+        }
+
+        [Test, ExpectedException(ExpectedMessage = "\"x.Contains(\"d\")\"\r\n  But was:  \"abc\"", MatchType = MessageMatch.Contains)]
+        public void Instance_method_called_on_parameter_with_simple_arguments_fails()
+        {
+            "abc".Should(x => x.Contains("d"));
+        }
+
+        [Test]
+        public void Static_method_call_on_right_side()
         {
             1.Should(x => x == int.Parse("1"));
         }
 
         [Test, ExpectedException(ExpectedMessage = "2\r\n  But was:  1", MatchType = MessageMatch.Contains)]
-        public void StaticMethodOnLiteralFailing()
+        public void Static_method_call_on_right_side_fails()
         {
             1.Should(x => x == int.Parse("2"));
         }
 
         [Test]
-        public void InstanceMethodOnLiteral()
+        public void Instance_method_call_on_right_side()
         {
             "1".Should(x => x == 1.ToString());
         }
 
         [Test, ExpectedException(ExpectedMessage = "\"2\"\r\n  But was:  \"1\"", MatchType = MessageMatch.Contains)]
-        public void InstanceMethodOnLiteralFailing()
+        public void Instance_method_call_on_right_side_fails()
         {
             "1".Should(x => x == 2.ToString());
         }
 
         [Test]
-        public void ExpressionParameterOnRightSide()
+        public void Parameter_on_right_side()
         {
             1.Should(x => x == x);
         }
 
         [Test, ExpectedException(ExpectedMessage = "not 1\r\n  But was:  1", MatchType = MessageMatch.Contains)]
-        public void ExpressionParameterOnRightSideFailing()
+        public void Parameter_on_right_side_fails()
         {
             1.Should(x => x != x);
         }
 
         [Test]
-        public void ExpressionParameterMethodCallOnRightSide()
+        public void Method_call_on_parameter_on_right_side()
         {
             1.Should(x => x == int.Parse(x.ToString()));
         }
 
         [Test, ExpectedException(ExpectedMessage = "11\r\n  But was:  1", MatchType = MessageMatch.Contains)]
-        public void ExpressionParameterMethodCallOnRightSideFailing()
+        public void Method_call_on_parameter_on_right_side_fails()
         {
             1.Should(x => x == int.Parse(x.ToString() + 1));
         }
 
 
         [Test, ExpectedException(ExpectedMessage = "Expression 1 invalid on left side of binary expression")]
-        public void InvalidLeftSideOperand1()
+        public void Invalid_left_side_operand_1()
         {
             1.Should(x => 1 == x);
         }
 
         [Test, ExpectedException(ExpectedMessage = "Expression x.ToString() invalid on left side of binary expression")]
-        public void InvalidLeftSideOperand2()
+        public void Invalid_left_side_operand_2()
         {
             1.Should(x => x.ToString() == "1");
         }
 
         [Test, ExpectedException(ExpectedMessage = "y invalid on left side of binary expression", MatchType = MessageMatch.Contains)]
-        public void InvalidLeftSideOperand3()
+        public void Invalid_left_side_operand_3()
         {
             var y = 1;
             1.Should(x => y == x);
         }
 
         [Test, ExpectedException(ExpectedMessage = "Expression x.Length invalid on left side of binary expression")]
-        public void InvalidLeftSideOperand4()
+        public void Invalid_left_side_operand_4()
         {
             "".Should(x => x.Length == 0);
         }
 
         [Test, ExpectedException(ExpectedMessage = "invalid on left side of binary expression", MatchType = MessageMatch.Contains)]
-        public void InvalidLeftSideOperand5()
+        public void Invalid_left_side_operand_5()
         {
             "".Should(x => x[0] == 0);
         }
@@ -305,6 +299,5 @@ namespace LinUnit.Tests
             var y = 3;
             new[]{1, 2}.Should(x => x.Contains(y));
         }
-
     }
 }
